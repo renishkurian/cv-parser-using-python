@@ -1,0 +1,136 @@
+{% extends 'user/layout/app.html' %}
+
+{% block bin %}
+
+    <div class="row">
+
+        {% for i in project.cvbin_set.all %}
+            <div class="col-md-12">
+                <a class="books" href="#" title="{{ i.created_at }}"><i class="fa fa-folder-open "
+                                                                        aria-hidden="true"></i>{{ i.bucketname|title }}
+                </a>
+             <ul class="folder-list hidden">
+                {% for combination in i.cvcombination_set.all %}
+                  <li>  <div class="col-md-12 ">
+
+                            <a href='{{ combination.id }}' data-id="{{ combination.id }}/{{ i.id }}/{{ i.project.id }} "
+                           class="combo"><i class="fa fa-folder " aria-hidden="true"> </i>{{ combination.combo|title }}
+                        </a>
+
+                    </div></li>
+                {% endfor %}
+              </ul>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock bin %}
+{% block main %}
+    <div class="option-bar">
+        <div class="row">
+            <div class="col-md-1"> <a  class="backbutton" href="{% url 'project' %}"> <i class="fa fa-backward"></i> </a></div>
+            <div class="col-md-5">
+
+
+
+                <form method="post" enctype="multipart/form-data">
+
+<div class="form-group">
+                    <input type="hidden" name="pk" value="{{ project.id }}">
+                    {% csrf_token %}<input type="file" multiple name="cv" required><input class="btn btn-primary"
+                                                                                          type="submit"
+                                                                                          value="Add Files">
+</div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form method="post" action="{% url 'createbucket' %}">
+
+
+                    <input type="hidden" name="pk" value="{{ project.id }}">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6"><input type="text" class="form-control" name="filter" required></div>
+                        <div class="col-md-6"><input placeholder="" class="btn btn-primary" type="submit"
+                                                     value="Create filter"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <div class="row">
+                <div class="col-md-12">
+                   <div class="row" >
+                       <div class="col-md-2">Project: <a href=""> {{ project.name.capitalize }}</a></div>
+                   <div class="col-md-2" id="combo">
+
+                   </div>
+                   </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">page</th>
+                            <th scope="col">File</th>
+
+                            <th scope="col">Uploaded</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table">
+                        {% for i in project.filebin_set.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ i.filename }}</td>
+                                <td>{% if i.email != '0' %}{{ i.email }}{% endif %}</td>
+                                <td>{% if i.phone != '0' %}{{ i.phone }}{% endif %}</td>
+                                <td>{{ i.page }}</td>
+                                <td><a href="{{ i.path.url }}" style="color: red"><i
+                                        class="fa fa-file-pdf create-project-icon"></i></a></td>
+                                <td> {{ i.created_at }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <span>
+        {{ project.created_at }}</span>
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}
+{% block js %}
+    <script>
+        $(function () {
+            $('a').addClass('remove-hover')
+            //$(".hidden").hide();
+            //
+        })
+
+        $(".books").on('click', function (e) {
+
+            e.preventDefault()
+            $(this).closest('div').find('.hidden').toggle()
+        })
+
+        $('.combo').click(function (e) {
+          $(this).parent().closest('li').addClass('selected').siblings().removeClass('selected');
+
+            e.preventDefault()
+            apicall({url: "{%  url 'fetch-bucket' %}", data: {id: $(this).data('id')}, success: ajax_call})
+        })
+
+        function ajax_call(r) {
+            $('#table').html(r.result)
+            $('#combo').html('Combination:'+'<a href="#">'+r.combo+"</a>")
+        }
+    </script>
+{% endblock js %}

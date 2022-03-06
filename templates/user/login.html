@@ -1,0 +1,55 @@
+{% extends 'user/layout/app.html' %}
+{% block main %}
+
+  
+    <div class="d-flex justify-content-center align-items-baseline">
+        <form method="post">
+            {% csrf_token %}
+            <div class="login-wrapper">
+                <div class="d-flex flex-column ">
+                    <div class="p-2 w-100 ">
+                        <label for="{{ form.username.id_for_label }}">Email</label>
+                        <div class=" w-100">
+                            <input type="text" class="form-control  {% if form.username.errors.0  %} is-invalid {% endif %}"" name="{{ form.username.html_name }}">
+                        </div>
+
+                        <span class="errorbag">{{ form.username.errors.0 }}</span>
+
+
+                    </div>
+                    <div class="p-2 w-100">
+                        <div class="fieldWrapper">
+
+                            <label for="{{ form.username.id_for_label }}">password </label>
+                            <input type="password" class="form-control {% if form.password.errors.0  %} is-invalid {% endif %}" name="{{ form.password.html_name }}">
+                            <span class="errorbag"> {{ form.password.errors.0 }}</span>
+                        </div>
+                    </div>
+                    <div class="p-2">
+
+                        <div class=" d-flex justify-content-center">
+                            <input type="submit" value="login" class="btn btn-primary btn-block">
+                        </div>
+
+                        <div class=" d-flex justify-content-center"> {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="text-danger errorbag">{{ error }}</p>
+            {% endfor %}
+      {% endif %}</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock main %}
+
+{% block js %}
+    <script>
+$(document).ready(function(){
+  $('.toast').toast('show');
+});
+</script>
+{% endblock js %}
+

@@ -1,0 +1,9 @@
+  django-admin
+  django-admin
+  django-admin
+  django
+  PyPDF2
+  python-docx
+  pdfminer
+  pdfminer.six
+

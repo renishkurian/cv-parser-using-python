@@ -1,0 +1,50 @@
+{% extends 'health/layout/app.html' %}
+
+{% block main %}
+    <div class="pure-u-11-12 pure-u-md-1-2 well" style="margin-top:20%">
+               <div id="name_div" class="pure-form pure-form-stacked">
+
+            <h3 class="center fivepxtop fivepxbottom quiz_heading">
+                &#128149;&#128165;
+                2019 Health Dare
+               &#128526;&#128131;
+            </h3>
+            <h3 class="fivepxtop tenpxbottom center">How Healthy are you?</h3>
+            <div class="pure-g">
+                <div class="pure-u-1">
+                    <label for="first-name"><h4 class="fivepxbottom fivepxtop">Enter your Full Name : </h4></label>
+                    <input id="name" class="pure-u-1 form-control" type="text" placeholder="Full Name" required>
+                    <span id="name_error" class="error hidden">Name Cannot be Blank</span>
+                </div>
+                <div class="pure-u-1">
+                    <input id="start" type="submit" class="pure-button pure-button-primary full" value="&nbsp; Start &nbsp;👈" style="background-color: rgb(153, 0, 59) !important;color:white">
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+
+
+{% endblock main %}
+{% block js %}
+    <script>
+$(document).ready(function(e){
+
+
+    $('#start').on('click',function(e){
+
+        if($('#name').val().length<2){
+            $('#name_error').removeClass('hidden')
+        }
+        else
+        {
+             $('#name_error').addClass('hidden')
+        }
+
+
+    })
+
+})
+</script>
+{% endblock %}

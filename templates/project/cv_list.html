@@ -1,0 +1,12 @@
+{% for row in result %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ row.cv.filename }}</td>
+        <td>{% if row.cv.email != '0' %}{{ row.cv.email }}{% endif %}</td>
+        <td>{% if row.cv.phone != '0' %}{{ row.cv.phone }}{% endif %}</td>
+        <td>{{ row.cv.page }}</td>
+        <td><a href="{{ row.cv.path.url }}" style="color: red"><i class="fa fa-file-pdf create-project-icon"></i></a>
+        </td>
+        <td> {{ row.cv.created_at }}</td>
+    </tr>
+{% endfor %}

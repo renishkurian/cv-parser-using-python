@@ -1,0 +1,118 @@
+{% extends 'user/layout/app.html' %}
+{% load static %}
+{% block main %}
+     <div class=" "><a href="{% url 'createproject' %}" class="remove-hover" ><i class="fas fa-folder-plus create-project-icon"></i><span style="font-size: 12px">New Project</span></a></div>
+
+<div >
+
+
+
+    <div class="row">
+   {% for project in projects %}
+
+
+          <div class="col-md-1 folder-wrapper task ">
+
+              <a style=" color:{{ project.foldercolor.color }}"  data-id="{{ project.id }}" class="remove-hover task__contents folders" title="{{ project.created_at}}" href="{% url 'view shelves'  project.id%}"> <i class="fas fa-folder folder "></i>
+                  <br>
+                  <span>{{ project.name.capitalize }}</span></a>
+
+          </div>
+
+
+    {% endfor %}
+    </div>
+
+</div>
+
+<nav id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+
+         <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="rename"> Rename Folder</a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="View"> View Task</a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="Edit"> Edit Task</a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="Delete"> Delete Folder</a>
+      </li>
+        <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="properties" data-toggle="modal" data-target="#exampleModal"> Properties</a>
+      </li>
+    </ul>
+  </nav>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog w-50" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header" style="font-size: 12px;height: 30px;padding-top: 2px;">
+        <h6 class="modal-title"  style="font-weight: bold" id="exampleModalLabel"></h6>
+        <a class=" book" data-dismiss="modal" aria-label="Close"  >
+          <span aria-hidden="true">&times;</span>
+        </a>
+      </div>
+      <div class="modal-body" style="padding: 0px">
+       <ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">buzz</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
+  </li>
+            <li class="nav-item">
+    <a class="nav-link" href="#fs" role="tab" data-toggle="tab">Folder Settings</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="profile">...</div>
+  <div role="tabpanel" class="tab-pane fade" id="buzz">bbb</div>
+  <div role="tabpanel" class="tab-pane fade" id="references">ccc</div>
+    <div role="tabpanel" class="tab-pane fade" id="fs">
+
+        <input type="color" name="color" id="color">
+        <button id="changecolor" onclick=" change_color()">Change color</button>
+
+    </div>
+</div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/context_menu.css" %}" >
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script src="{% static 'js/context.js' %}"  crossorigin="anonymous"></script>
+
+{% endblock  %}
+
+
+
+{% block bin %}
+    <div style="padding: 20px;text-align: center">
+    <img src="https://www.pngarts.com/files/4/Recycle-Bin-Transparent-Background-PNG.png" width="80px">
+    <span style="font-weight: bold;font-size: 10px">Trash</span>
+    </div>
+{% endblock bin %}

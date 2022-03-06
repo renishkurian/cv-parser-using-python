@@ -1,0 +1,87 @@
+{% extends 'user/layout/app.html' %}
+{% load static %}
+{% block main %}
+
+
+  <div class="main">
+<form method="post">
+
+    {{ form.errors }}
+    {% csrf_token %}
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form method="POST" id="signup-form" class="signup-form">
+                        <h2 class="form-title">Create account</h2>
+                        <div class="form-group">
+                            <input value=" {% if form.username.value %}{{ form.username.value }} {% endif %}" required type="text" class="form-input" data-toggle="tooltip" data-placement="top"  name={{ form.username.html_name }} id="name" placeholder="Your Name" title="{{ form.username.help_text }}"/>
+
+                        <span class="errorbag">{{ form.username.errors.0 }}</span>
+                        </div>
+                        <div class="form-group">
+                            <input value="{% if form.email.value %}{{ form.email.value }}{% endif %}" required type="email"  class="form-input" name="{{ form.email.html_name }}" id="email" placeholder="Your Email"/>
+                              <span class="errorbag">{{ form.email.errors.0 }}</span>
+                        </div>
+                        <div class="form-group">
+                            <input  required data-toggle="tooltip" data-placement="top" title="{{ form.password1.help_text|striptags }}" type="text" class="form-input" name="password1" id="password" placeholder="Password"/>
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                             <span class="errorbag">{{ form.password1.errors.0 }}</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="password2" id="re_password" placeholder="Repeat your password"/>
+                             <span class="errorbag">{{ form.password2.errors.0 }}</span>
+                        </div>
+                        <div class="form-group">
+                            <input required type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
+                               {% for error in form.non_field_errors %}
+                <p class="text-danger errorbag">{{ error }}</p>
+            {% endfor %}
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        Have already an account ? <a href="{% url 'login' %}" class="loginhere-link">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+</form>
+    </div>
+
+
+
+
+{% endblock main %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link rel="stylesheet" href="{% static 'css/normalise.css'%}">
+{% endblock css %}
+
+{% block js %}
+
+    <script>
+$(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+    (function($) {
+
+    $(".toggle-password").click(function() {
+
+        $(this).toggleClass("zmdi-eye zmdi-eye-off");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+      });
+
+})(jQuery);
+    </script>
+{% endblock js %}

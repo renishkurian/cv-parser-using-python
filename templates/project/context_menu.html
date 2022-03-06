@@ -1,0 +1,24 @@
+{% load static %}
+<nav id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="View"> View Task</a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="Edit"> Edit Task</a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link remove-hover" data-action="Delete"> Delete Folder</a>
+      </li>
+        {% block context-option %}
+        {% endblock %}
+    </ul>
+  </nav>
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/context_menu.css" %}" >
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/context.js' %}"  crossorigin="anonymous"></script>
+{% endblock  %}
